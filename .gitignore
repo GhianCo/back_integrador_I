@@ -1,0 +1,59 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Eclipse and VS Code project files
+.classpath
+.project
+.settings/
+.vscode/
+
+# IntelliJ project files
+.idea/
+*.iml
+out/
+target
+
+
+# NetBeans project files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Maven and Gradle build directories
+target/
+build/
+
+# Local environment and OS-specific files
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Jakarta WS specific (WSDLs and generated code - optional)
+generated/
+**/generated-sources/
+**/generated-classes/
+
+# Ignore credentials or config
+*.env
+.env.local
+*.properties.local
+config/*.secret
+
