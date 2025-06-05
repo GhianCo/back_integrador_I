@@ -4,6 +4,8 @@
  */
 package shared;
 
+import modules.pet.dao.PetDao;
+import modules.pet.dao.impl.PetDaoImpl;
 import modules.service.dao.ServiceDao;
 import modules.service.dao.impl.ServiceDaoImpl;
 import modules.user.dao.UserDao;
@@ -16,7 +18,7 @@ import shared.dao.person.impl.PersonDaoImpl;
  * @author ghianco
  */
 public class DaoFactory {
-    
+
     private DaoFactory() {
     }
 
@@ -25,19 +27,24 @@ public class DaoFactory {
     }
 
     private static class DaoFactoryHolder {
+
         private static final DaoFactory INSTANCE = new DaoFactory();
     }
-    
+
     public ServiceDao getServiceDao() {
         return new ServiceDaoImpl();
     }
-    
+
     public PersonDao getPersonDao() {
         return new PersonDaoImpl();
     }
-    
+
     public UserDao getUserDao() {
         return new UserDaoImpl();
     }
-    
+
+    public PetDao getPetDao() {
+        return new PetDaoImpl();
+    }
+
 }

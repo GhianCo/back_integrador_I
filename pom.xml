@@ -74,7 +74,12 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.2.0-jre</version> <!-- Última versión estable a junio de 2025 -->
+        </dependency>
     </dependencies>
     
     <build>
