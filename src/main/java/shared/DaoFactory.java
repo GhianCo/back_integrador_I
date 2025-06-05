@@ -4,6 +4,8 @@
  */
 package shared;
 
+import modules.customer.dao.CustomerDao;
+import modules.customer.dao.impl.CustomerDaoImpl;
 import modules.pet.dao.PetDao;
 import modules.pet.dao.impl.PetDaoImpl;
 import modules.service.dao.ServiceDao;
@@ -45,6 +47,10 @@ public class DaoFactory {
 
     public PetDao getPetDao() {
         return new PetDaoImpl();
+    }
+    
+    public CustomerDao getCustomerDao() {
+        return new CustomerDaoImpl();
     }
 
 }
