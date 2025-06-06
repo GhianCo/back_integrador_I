@@ -127,7 +127,7 @@ public class CustomerDaoImpl implements CustomerDao {
         );
 
         if (!Strings.isNullOrEmpty(query)) {
-            sqlBuilder.append(" AND (p.name LIKE ? OR p.lastname LIKE ?)");
+            sqlBuilder.append(" AND (p.name LIKE ? OR p.lastname LIKE ? OR p.dni LIKE ?)");
         }
 
         sqlBuilder.append(" ORDER BY customer_id LIMIT ? OFFSET ?");
@@ -136,6 +136,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
             int paramIndex = 1;
             if (!Strings.isNullOrEmpty(query)) {
+                pst.setString(paramIndex++, "%" + query + "%");
                 pst.setString(paramIndex++, "%" + query + "%");
                 pst.setString(paramIndex++, "%" + query + "%");
             }

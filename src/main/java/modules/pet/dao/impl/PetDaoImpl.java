@@ -8,7 +8,9 @@ import shared.PaginationResult;
 
 import java.sql.*;
 import java.util.ArrayList;
+import modules.pet.assembler.PetDetailsAssembler;
 import modules.pet.dao.PetDao;
+import modules.pet.dto.PetDetailsDTO;
 import modules.pet.models.Pet;
 
 public class PetDaoImpl implements PetDao {
@@ -141,19 +143,19 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
-    public PaginationResult<ArrayList<Pet>, Pagination> paginate(String query, int page, int perPage) {
-        ArrayList<Pet> listaPets = new ArrayList<>();
+    public PaginationResult<ArrayList<PetDetailsDTO>, Pagination> paginate(String query, int page, int perPage) {
+        ArrayList<PetDetailsDTO> listaPets = new ArrayList<>();
         int totalRecords = 0;
 
         StringBuilder sqlBuilder = new StringBuilder(
-                "SELECT SQL_CALC_FOUND_ROWS * FROM pet WHERE active = 1"
+                "SELECT SQL_CALC_FOUND_ROWS * FROM pet p, customer c, person per WHERE p.customer_id = c.customer_id and c.person_id = per.person_id and p.active = 1"
         );
 
         if (!Strings.isNullOrEmpty(query)) {
-            sqlBuilder.append(" AND (name LIKE ? OR especie LIKE ?)");
+            sqlBuilder.append(" AND (p.name LIKE ? OR p.especie LIKE ?)");
         }
 
-        sqlBuilder.append(" ORDER BY pet_id LIMIT ? OFFSET ?");
+        sqlBuilder.append(" ORDER BY p.pet_id LIMIT ? OFFSET ?");
 
         try (Connection connection = DBConn.getConnection(); PreparedStatement pst = connection.prepareStatement(sqlBuilder.toString())) {
 
@@ -166,18 +168,10 @@ public class PetDaoImpl implements PetDao {
             pst.setInt(paramIndex++, perPage);
             pst.setInt(paramIndex++, (page - 1) * perPage);
 
+            PetDetailsAssembler assembler = new PetDetailsAssembler();
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
-                    listaPets.add(new Pet(
-                            rs.getInt("pet_id"),
-                            rs.getInt("customer_id"),
-                            rs.getString("name"),
-                            rs.getString("especie"),
-                            rs.getString("breed"),
-                            rs.getString("birthdate"),
-                            rs.getString("gender"),
-                            rs.getString("active")
-                    ));
+                    listaPets.add(assembler.fromResultSet(rs));
                 }
             }
 
