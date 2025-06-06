@@ -168,10 +168,9 @@ public class PetDaoImpl implements PetDao {
             pst.setInt(paramIndex++, perPage);
             pst.setInt(paramIndex++, (page - 1) * perPage);
 
-            PetDetailsAssembler assembler = new PetDetailsAssembler();
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
-                    listaPets.add(assembler.fromResultSet(rs));
+                    listaPets.add(PetDetailsAssembler.fromResultSet(rs));
                 }
             }
 

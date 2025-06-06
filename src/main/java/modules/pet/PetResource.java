@@ -48,10 +48,9 @@ public class PetResource {
     @POST
     public Response create(PetCreateRequestDTO petCreateRequestDTO) {
         PetCtrlImpl petpet = new PetCtrlImpl();
-        Pet data = petpet.createPet(petCreateRequestDTO);
         return Response
                 .status(Response.Status.OK)
-                .entity(new ActionPayload(201, data, "Mascota creada exitosamente"))
+                .entity(new ActionPayload(201, petpet.createPet(petCreateRequestDTO), "Mascota creada exitosamente"))
                 .build();
     }
 
@@ -60,10 +59,9 @@ public class PetResource {
     public Response update(@PathParam("id") int petId, PetCreateRequestDTO petCreateRequestDTO) {
         PetCtrlImpl petpet = new PetCtrlImpl();
         petCreateRequestDTO.setPet_id(petId);
-        Pet data = petpet.updatePet(petCreateRequestDTO);
         return Response
                 .status(Response.Status.OK)
-                .entity(new ActionPayload(200, data, "Mascota actualizada exitosamente"))
+                .entity(new ActionPayload(200, petpet.updatePet(petCreateRequestDTO), "Mascota actualizada exitosamente"))
                 .build();
     }
     

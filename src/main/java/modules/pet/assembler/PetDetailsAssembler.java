@@ -6,14 +6,16 @@ package modules.pet.assembler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modules.pet.dto.PetCreateRequestDTO;
 import modules.pet.dto.PetDetailsDTO;
+import modules.pet.models.Pet;
 
 /**
  *
  * @author ghianco
  */
 public class PetDetailsAssembler {
-    public PetDetailsDTO fromResultSet(ResultSet rs) throws SQLException {
+    public static PetDetailsDTO fromResultSet(ResultSet rs) throws SQLException {
         PetDetailsDTO dto = new PetDetailsDTO();
 
         dto.setPet_id(rs.getInt("pet_id"));
@@ -27,6 +29,21 @@ public class PetDetailsAssembler {
         dto.setCustomer_id(rs.getInt("customer_id"));
         dto.setCustomer_fullname(rs.getString("per.name") + " " + rs.getString("per.lastname"));  
 
+        return dto;
+    }
+    
+    
+    public static PetDetailsDTO fromCreateUpdateRequest(Pet pet, PetCreateRequestDTO request) {
+        PetDetailsDTO dto = new PetDetailsDTO();
+        dto.setPet_id(pet.getPet_id());
+        dto.setCustomer_id(pet.getCustomer_id());
+        dto.setName(pet.getName());
+        dto.setEspecie(pet.getEspecie());
+        dto.setBreed(pet.getBreed());
+        dto.setBirthdate(pet.getBirthdate());
+        dto.setGender(pet.getGender());
+        dto.setActive(pet.getActive());
+        dto.setCustomer_fullname(request.getCustomer_fullname());
         return dto;
     }
 }

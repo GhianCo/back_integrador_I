@@ -10,6 +10,7 @@ public class PetCreateRequestDTO {
     private String birthdate;
     private String gender;
     private String active;
+    private String customer_fullname;
 
     public int getPet_id() {
         return pet_id;
@@ -73,6 +74,14 @@ public class PetCreateRequestDTO {
 
     public void setActive(String active) {
         this.active = active;
+    }
+
+    public String getCustomer_fullname() {
+        return customer_fullname;
+    }
+
+    public void setCustomer_fullname(String customer_fullname) {
+        this.customer_fullname = customer_fullname;
     }
 
 }

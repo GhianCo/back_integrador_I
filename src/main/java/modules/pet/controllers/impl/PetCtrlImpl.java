@@ -1,9 +1,11 @@
 package modules.pet.controllers.impl;
 
 import java.util.List;
+import modules.pet.assembler.PetDetailsAssembler;
 import modules.pet.controllers.PetCtrl;
 import modules.pet.dao.PetDao;
 import modules.pet.dto.PetCreateRequestDTO;
+import modules.pet.dto.PetDetailsDTO;
 import modules.pet.models.Pet;
 import org.json.JSONObject;
 import shared.DaoFactory;
@@ -29,17 +31,17 @@ public class PetCtrlImpl implements PetCtrl {
     }
 
     @Override
-    public Pet createPet(PetCreateRequestDTO jsonRequest) {
+    public PetDetailsDTO createPet(PetCreateRequestDTO jsonRequest) {
         Pet petToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Pet.class);
         int petIdCreate = petDao.create(petToCreate);
 
         petToCreate.setPet_id(petIdCreate);
 
-        return petToCreate;
+        return PetDetailsAssembler.fromCreateUpdateRequest(petToCreate, jsonRequest);
     }
 
     @Override
-    public Pet updatePet(PetCreateRequestDTO jsonRequest) {
+    public PetDetailsDTO updatePet(PetCreateRequestDTO jsonRequest) {
 
         if (jsonRequest == null || jsonRequest.getPet_id() == 0) {
             throw new IllegalArgumentException("El ID del servicio es necesario para actualizar.");
@@ -50,7 +52,7 @@ public class PetCtrlImpl implements PetCtrl {
 
         petDao.update(petToUpdate);
 
-        return petToUpdate;
+        return PetDetailsAssembler.fromCreateUpdateRequest(petToUpdate, jsonRequest);
     }
 
     @Override
