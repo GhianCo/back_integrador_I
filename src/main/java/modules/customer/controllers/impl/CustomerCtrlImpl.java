@@ -10,7 +10,9 @@ import shared.DaoFactory;
 import shared.JsonMapper;
 import shared.PaginationResult;
 import shared.dao.person.PersonDao;
+import shared.exceptions.InvalidArg;
 import shared.models.Person;
+import shared.utils.EmailUtils;
 
 public class CustomerCtrlImpl implements CustomerCtrl {
 
@@ -35,6 +37,10 @@ public class CustomerCtrlImpl implements CustomerCtrl {
     @Override
     public Customer createCustomerAndPerson(CustomerCreateRequestDTO jsonRequest) {
         Person personToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Person.class);
+        
+        if (!EmailUtils.isValidEmail(personToCreate.getEmail())) {
+            throw new InvalidArg("El correo enviado no es válido.");
+        }
         int personIdCreate = personDao.create(personToCreate);
 
         Customer customerToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Customer.class);

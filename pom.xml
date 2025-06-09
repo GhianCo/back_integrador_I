@@ -80,6 +80,11 @@
             <artifactId>guava</artifactId>
             <version>33.2.0-jre</version> <!-- Última versión estable a junio de 2025 -->
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.9.0</version>
+        </dependency>
     </dependencies>
     
     <build>
