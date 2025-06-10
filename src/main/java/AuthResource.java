@@ -31,6 +31,7 @@ public class AuthResource {
                     .withSubject(String.valueOf(user_login.getUser_id()))
                     .withClaim("name", user_login.getName())
                     .withClaim("lastname", user_login.getLastname())
+                    .withClaim("email", user_login.getEmail())
                     .withClaim("role", user_login.getRole())
                     .sign(algorithm);
 

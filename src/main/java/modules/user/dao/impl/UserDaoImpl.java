@@ -175,7 +175,7 @@ public class UserDaoImpl implements UserDao {
         try {
 
             connection = DBConn.getConnection();
-            String sql = "select u.user_id, u.role, u.nick, u.pass, p.name, p.lastname, p.dni from user u, person p where u.person_id = p.person_id and nick='" + user.getNick() + "' and pass='" + user.getPass()+ "' and u.active = 1";
+            String sql = "select u.user_id, u.role, u.nick, u.pass, p.name, p.lastname, p.dni, p.email from user u, person p where u.person_id = p.person_id and nick='" + user.getNick() + "' and pass='" + user.getPass()+ "' and u.active = 1";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
@@ -187,6 +187,7 @@ public class UserDaoImpl implements UserDao {
                 user_login.setName(resultSet.getString(5));
                 user_login.setLastname(resultSet.getString(6));
                 user_login.setDni(resultSet.getString(7));
+                user_login.setEmail(resultSet.getString(8));
             }
 
             resultSet.close();
