@@ -5,6 +5,7 @@ import modules.customer.controllers.CustomerCtrl;
 import modules.customer.dao.CustomerDao;
 import modules.customer.dto.CustomerCreateRequestDTO;
 import modules.customer.models.Customer;
+import modules.service.dao.ServiceDao;
 import org.json.JSONObject;
 import shared.DaoFactory;
 import shared.JsonMapper;
@@ -21,6 +22,11 @@ public class CustomerCtrlImpl implements CustomerCtrl {
 
     public CustomerCtrlImpl() {
         this.instanceConn();
+    }
+
+    public CustomerCtrlImpl(CustomerDao customerDao, PersonDao personDao) {
+        this.customerDao = customerDao;
+        this.personDao = personDao;
     }
 
     private void instanceConn() {
@@ -80,7 +86,7 @@ public class CustomerCtrlImpl implements CustomerCtrl {
 
         customerToUpdate.setCustomer_id(jsonRequest.getCustomer_id());
         customerDao.update(customerToUpdate);
-        
+
         customerToUpdate.setName(personToUpdate.getName());
         customerToUpdate.setLastname(personToUpdate.getLastname());
         customerToUpdate.setDni(personToUpdate.getDni());

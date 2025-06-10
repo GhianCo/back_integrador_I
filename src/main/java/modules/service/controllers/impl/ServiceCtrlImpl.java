@@ -17,6 +17,10 @@ public class ServiceCtrlImpl implements ServiceCtrl {
     public ServiceCtrlImpl() {
         this.instanceConn();
     }
+    
+    public ServiceCtrlImpl(ServiceDao mockDao) {
+        this.serviceDao = mockDao;
+    }
 
     private void instanceConn() {
         DaoFactory daoFactory = DaoFactory.getInstance();
