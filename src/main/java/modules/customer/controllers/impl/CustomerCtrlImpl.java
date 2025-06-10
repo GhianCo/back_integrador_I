@@ -37,10 +37,14 @@ public class CustomerCtrlImpl implements CustomerCtrl {
     @Override
     public Customer createCustomerAndPerson(CustomerCreateRequestDTO jsonRequest) {
         Person personToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Person.class);
-        
+
+        if (personToCreate.getDni().length() != 8) {
+            throw new InvalidArg("El DNI enviado no es tiene el formato correcto.");
+        }
         if (!EmailUtils.isValidEmail(personToCreate.getEmail())) {
             throw new InvalidArg("El correo enviado no es válido.");
         }
+
         int personIdCreate = personDao.create(personToCreate);
 
         Customer customerToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Customer.class);
@@ -62,16 +66,29 @@ public class CustomerCtrlImpl implements CustomerCtrl {
 
     @Override
     public Customer updateCustomerAndPerson(CustomerCreateRequestDTO jsonRequest) {
-        Person personToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Person.class);
-        Customer customerToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Customer.class);
+        Person personToUpdate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Person.class);
+        if (personToUpdate.getDni().length() != 8) {
+            throw new InvalidArg("El DNI enviado no es tiene el formato correcto.");
+        }
+        if (!EmailUtils.isValidEmail(personToUpdate.getEmail())) {
+            throw new InvalidArg("El correo enviado no es válido.");
+        }
+        Customer customerToUpdate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Customer.class);
 
-        personToCreate.setPerson_id(jsonRequest.getPerson_id());
-        personDao.update(personToCreate);
+        personToUpdate.setPerson_id(jsonRequest.getPerson_id());
+        personDao.update(personToUpdate);
 
-        customerToCreate.setCustomer_id(jsonRequest.getCustomer_id());
-        customerDao.update(customerToCreate);
+        customerToUpdate.setCustomer_id(jsonRequest.getCustomer_id());
+        customerDao.update(customerToUpdate);
+        
+        customerToUpdate.setName(personToUpdate.getName());
+        customerToUpdate.setLastname(personToUpdate.getLastname());
+        customerToUpdate.setDni(personToUpdate.getDni());
+        customerToUpdate.setEmail(personToUpdate.getEmail());
+        customerToUpdate.setPhone(personToUpdate.getPhone());
+        customerToUpdate.setAddress(personToUpdate.getAddress());
 
-        return customerToCreate;
+        return customerToUpdate;
     }
 
     @Override
